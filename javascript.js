@@ -36,5 +36,33 @@ function displayOutcome(type, won, lost) {
 }
 
 function playGame() {
-    
+    let counter = 0
+    for (let i = 1; i <=5; i++) {
+        let playerSelection = prompt('Put in rock paper or scissors')
+        let outcome = playRound(playerSelection, getComputerChoice())
+        console.log(outcome)
+        let theSlice = outcome.slice(4,8)
+        switch (theSlice) {
+            case "Won ":
+                counter +=1;
+                break;
+            case "Lost":
+                counter -=1;
+                break;
+            case "Tied":
+                counter += 0;
+                break;
+        }
+
+    }
+
+    if (counter > 0) {
+        console.log('You won the game!');
+    } else if (counter < 0 ) {
+        console.log('You lost the game womp womp');
+    } else if (counter == 0) {
+        console.log('You tied!');
+    }
+
+
 }
