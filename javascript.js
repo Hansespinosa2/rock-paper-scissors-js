@@ -43,7 +43,7 @@ function playGame() {
         console.log(outcome)
         let theSlice = outcome.slice(4,8)
         switch (theSlice) {
-            case "Won ":
+            case "Won!":
                 counter +=1;
                 break;
             case "Lost":
@@ -53,6 +53,7 @@ function playGame() {
                 counter += 0;
                 break;
         }
+        
 
     }
 
@@ -63,6 +64,18 @@ function playGame() {
     } else if (counter == 0) {
         console.log('You tied!');
     }
-
-
 }
+
+const btnRock = document.querySelector('button.rock')
+const btnScissors = document.querySelector('button.scissors')
+const btnPaper = document.querySelector('button.paper')
+
+const btnPlays = document.querySelectorAll('button.play')
+
+btnPlays.forEach( function(btn) {
+    btn.addEventListener('click', function(e) {
+        let olResults = document.querySelector('ol');
+        let liRound = document.createElement('li');
+        playRound(e.target.textContent,getComputerChoice());
+    });
+});
