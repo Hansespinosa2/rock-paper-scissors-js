@@ -66,16 +66,63 @@ function playGame() {
     }
 }
 
+function getResult(outcome) {
+    let theSlice = outcome.slice(4,8)
+        switch (theSlice) {
+            case "Won!":
+                return [1,0,0]
+            case "Lost":
+                return [0,1,0]
+            case "Tied":
+                return [0,0,1]
+        }
+}
+
+function populateResults(arr) {
+    const ps = document.querySelectorAll('p')
+    let i = 0;
+    let arrResultsText = ['Number won: ', "Number lost: ", 'Number tied: ']
+    ps.forEach(function(p) {
+        p.textContent = `${arrResultsText[i]}${arr[i]}`
+        i++
+    });
+}
+
+function checkWinner(arr) {
+    if (arr[0] >= 5) {
+        finishedPlaying = true
+        return 'You won!'
+        
+    } else if (arr[1] >= 5) {
+        finishedPlaying = true
+        return 'You lost!'
+        
+    } else {
+        return 'Playing until five'
+    }
+}
+
+
+let arrResults = [0,0,0]
 const btnRock = document.querySelector('button.rock')
 const btnScissors = document.querySelector('button.scissors')
 const btnPaper = document.querySelector('button.paper')
-
+let finishedPlaying = false;
 const btnPlays = document.querySelectorAll('button.play')
 
 btnPlays.forEach( function(btn) {
     btn.addEventListener('click', function(e) {
+        if (!finishedPlaying) {
         let olResults = document.querySelector('ol');
         let liRound = document.createElement('li');
-        playRound(e.target.textContent,getComputerChoice());
+        let h3Result = document.querySelector('.final-result')
+        let outcome = playRound(e.target.textContent,getComputerChoice());
+        arrResults = arrResults.map((num, index) => num + getResult(outcome)[index])
+        populateResults(arrResults)
+        liRound.textContent = outcome
+        olResults.appendChild(liRound)
+
+        h3Result.textContent = checkWinner(arrResults)
+        }
     });
 });
